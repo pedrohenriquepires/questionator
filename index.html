@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<title>Questionator</title>
+	<link rel="stylesheet" href="/styles/index.css">
+	<link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
+</head>
+<body ng-controller="appController" ng-cloak>
+	<div class="logo">
+		<img src="images/logo.png" alt="">
+	</div>
+
+	<form data-ng-class="{ 'shake': wrongAnswer, 'full-scale': answered }" data-ng-if="question && !rightAnswer" ng-submit="sendAnswer()" class="form-answer">
+		<label for="answer" data-ng-bind="question"></label>
+
+		<div class="input-group">
+			<input type="text" autofocus id="answer" data-ng-disabled="rightAnswer" ng-model="formData.answer">
+			<button type="submit">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.001 512.001">
+					<path d="M509.532 35c-2.292-2.234-5.678-2.925-8.658-1.765l-495.66 192.5c-2.947 1.143-4.968 3.882-5.193 7.033-.224 3.15 1.387 6.15 4.14 7.7l102.718 57.875 35.65 174.26c.223 1.23.724 2.378 1.443 3.363.073.1.132.175.192.25 1.256 1.572 3.037 2.67 5.113 3 .265.043.53.073.795.09.17.01.34.015.51.015 1.56 0 3.037-.444 4.296-1.227.426-.264.83-.57 1.207-.915.117-.108.22-.205.318-.306l77.324-77.52c3.186-3.195 3.18-8.37-.015-11.555-3.2-3.188-8.37-3.18-11.556.015l-60.74 60.894 13.125-112.394 185.494 101.814c1.868 1.02 3.944 1.24 5.846.78.21-.05.4-.105.59-.166 1.877-.61 3.525-1.877 4.573-3.697l.146-.264c.21-.405.38-.8.516-1.203L511.52 43.607c1.08-3.01.304-6.377-1.988-8.608zM27.232 234.71l405.132-157.34-318.52 206.14-86.612-48.8zm135.488 82.224c-.764.613-1.43 1.374-1.95 2.267-.067.117-.13.235-.193.354-.496.96-.784 1.972-.88 2.986L148.366 419.6l-25.107-122.718L398.363 118.84 162.72 316.936zm196.787 102.26l-177.284-97.308L485.928 66.574l-126.42 352.62z"></path>
+				</svg>
+			</button>
+		</div>
+	</form>
+
+	<div class="right-answer" data-ng-if="rightAnswer">
+		<span><br>Nice! :) <br>Pega um café e espera a próxima pergunta</span>
+	</div>
+
+	<div class="waiting-question" data-ng-if="!askedUserName && !question">
+		<span>Oi <span data-ng-bind="user.name"></span>, guenta ae!</span>
+	</div>
+
+	<div class="blocker" data-ng-if="askedUserName">
+		<form class="modal-form" ng-submit="sendUserName()">
+			<center><h1>Te apresenta ae</h1></center>
+
+			<div class="modal-form-content">
+				<label for="name">Meu nome é</label>
+				<input type="text" id="name" ng-model="user.name">
+				<button type="submit">Enviar</button>
+			</div>
+		</form>
+	</div>
+
+	<script src="/bower_components/angular/angular.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
+	<script src="/bower_components/angular-socket-io/socket.js"></script>
+	<script src="/scripts/app.js"></script>
+</body>
+</html>

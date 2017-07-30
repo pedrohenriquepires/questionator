@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<title>Questionator</title>
+	<link rel="stylesheet" href="/styles/index.css">
+	<link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
+</head>
+<body ng-controller="appController">
+	<div class="logo" ng-if="!connected" style="margin-top: -88px">
+		<img src="images/logo.png" alt="">
+	</div>
+
+	<div class="wrapper" ng-if="connected">
+		<div class="flow-row">
+			<span data-ng-bind="question" class="question"></span>
+
+			<button class="new-peleia" ng-click="askNewQuestion()">Próxima peleia</button>
+			<button class="new-peleia" ng-click="openRegisterNewQuestion()">Nova peleia</button>
+		</div>
+
+		<ul class="users-list">
+			<li data-ng-class="{ 'user-right-answer': user.rightAnswer }" data-ng-repeat="user in users" data-ng-bind="user.name"></li>
+		</ul>
+	</div>
+
+	<div class="blocker" data-ng-if="registerNewQuestion">
+		<form class="modal-form" ng-submit="sendNewQuestion()" style="width: 90%">
+			<center><h1>Dados</h1></center>
+
+			<div class="modal-form-content" style="text-align: left;">
+				<label for="question">Pergunta</label>
+				<input type="text" id="question" ng-model="newQuestion.question">
+				<br>
+				<br>
+				<label for="answer">Resposta</label>
+				<input type="text" id="answer" ng-model="newQuestion.answers">
+				<br>
+				<br>
+				<label for="specificity">Especificidade</label>
+				<input type="checkbox" id="specificity" ng-model="newQuestion.specificity">
+
+				<button type="submit" style="width: 300px; margin: 0 auto">Enviar</button>
+			</div>
+		</form>
+	</div>
+
+	<script src="/bower_components/angular/angular.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
+	<script src="/bower_components/angular-socket-io/socket.js"></script>
+	<script src="/scripts/admin.js"></script>
+</body>
+</html>
